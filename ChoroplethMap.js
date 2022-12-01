@@ -16,42 +16,25 @@ function ChoroplethMap() {
    let educationData = [];
    let countyData = [];
 
-   // Get json data
-   d3.json(educationURL).then(
-      (data, error) => {
-         if(error){
-            console.log(log)
-         }else {
-            educationData = data
-            console.log(educationData)
-
-            d3.json(countyURL).then(
-               (data, error) => {
-                  if(error) {
-                     console.log(log)
-                  }else {
-                     countyData = topojson.feature(data, data.objects.counties).features   // convert the topology data into geoJSON format
-                     console.log(countyData)
-
-                     // GENERATE / RENDER ELEMENTS
-                     drawCanvas();
-                     drawCounties();
-                     generateLegend();
-                     generateTooltip();
-                  }
-               }
-            )
-         }
-      }
-   ); 
-
-   // draw canvas for chart (the svg element)
+   // function to draw svg (canvas)
    let drawCanvas = () => {
       svg.attr('id', 'canvas')
          .attr('width', width)
          .attr('height', height);
    }
 
+   let generateChartDescribtion = (titleLocationX, titleLocationY) => {
+      d3.select('svg')
+         .append('text')
+         .text("Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014). Source: USDA Economic Research Service")
+         .attr('id', 'description')
+         .attr('href', "https://www.ers.usda.gov/data-products/county-level-data-sets/download-data.aspx")
+         .attr('x', padding)
+         .attr('y', height - padding);
+   }
+// <p id="description" style="color: white"><a href="https://www.ers.usda.gov/data-products/county-level-data-sets/download-data.aspx">USDA Economic Research Service</a></p>
+
+   // Drawcounties (map) function
    let drawCounties = () => {
       svg.selectAll('path')
          .data(countyData)
@@ -76,7 +59,7 @@ function ChoroplethMap() {
          .on('mouseleave', mouseleave);
    }
 
-   // GENERATE TOOLTIP (info @: https://d3-graph-gallery.com/graph/interactivity_tooltip.html)
+   // Generate-Tooltip function (info @: https://d3-graph-gallery.com/graph/interactivity_tooltip.html)
    let generateTooltip = () => {
       tooltip
          .attr('class', 'tooltip')
@@ -133,9 +116,6 @@ function ChoroplethMap() {
       }
    }
 
-
-   let legendAxis = () => {}
-
    // GENERATE LEGEND (info: https://d3-graph-gallery.com/graph/custom_legend.html)
    legendKeys = [3, 12, 21, 30, 40, 50, 60, 61]
    let generateLegend = () => {
@@ -147,7 +127,7 @@ function ChoroplethMap() {
          .append('rect')
             .attr('class', 'legend')
             .attr('x', (d, i) => width /2 + i*(size + 3)) // size+3 is the distance between symbols
-            .attr('y', height - padding) 
+            .attr('y', height - (2 * padding)) 
             .attr('width', size)
             .attr('height', size)
             .attr("fill", (d) => colorScale2(d));
@@ -157,7 +137,7 @@ function ChoroplethMap() {
          .enter()
          .append("text")
             .attr("x", (d, i) => width /2 + i*(size + 3))
-            .attr("y", height - padding - padding/5)
+            .attr("y", height - (2 * padding) - padding/5)
             .text((d) => {
                if(d === 3) {
                   return '<3%'
@@ -172,10 +152,42 @@ function ChoroplethMap() {
             .style('font-size', '12px');
    }
 
+   let getDataClickHandler = () => {
+      d3.json(educationURL).then(
+         (data, error) => {
+            if(error){
+               console.log(log)
+            }else {
+               educationData = data
+               //console.log(educationData)
+
+               d3.json(countyURL).then(
+                  (data, error) => {
+                     if(error) {
+                        console.log(log)
+                     }else {
+                        countyData = topojson.feature(data, data.objects.counties).features   // convert the topology data into geoJSON format
+                        //console.log(countyData)
+                     }
+                  }
+               )
+            }
+         }
+      ); 
+   }
+
+   let generateMapClickHandler = () => {
+      drawCanvas();
+      drawCounties();
+      generateLegend();
+      generateTooltip();
+      generateChartDescribtion();
+   }
+
    return (
       <div>
-         <button >Get Data</button>
-         <button>Generate Map</button>
+         <button className={"button"} onClick={getDataClickHandler}>Get Data</button>
+         <button className={"button"} onClick={generateMapClickHandler}>Generate Map</button>
       </div>
    )
 

@@ -16,7 +16,7 @@ svg{
   background-color: rgb(212, 210, 208);
   box-shadow: 2px 2px 20px;
   border-radius: 5px;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 #title{
@@ -46,6 +46,17 @@ svg{
 .legend {
   border: 2px;
   stroke: black;
+}
+
+.button {
+  background-color: wheat;
+  width: 15vw;
+  height: 3vh;
+  border-radius: 5px;
+  font-size: medium;
+  font-weight: bold;
+  color: rgb(16, 82, 47);
+  border-color: rgb(16, 82, 47);
 }
 
 
