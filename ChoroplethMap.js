@@ -32,7 +32,6 @@ function ChoroplethMap() {
          .attr('x', padding)
          .attr('y', height - padding);
    }
-// <p id="description" style="color: white"><a href="https://www.ers.usda.gov/data-products/county-level-data-sets/download-data.aspx">USDA Economic Research Service</a></p>
 
    // Drawcounties (map) function
    let drawCounties = () => {
