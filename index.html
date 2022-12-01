@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Visualization with Scatterplot</title>
+    <!-- Load D3 library-->
+    <script src="https://d3js.org/d3.v7.js"></script>
+    <!-- Load D3 color scale -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <!-- Load GeoJSON extension that encodes topology data-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Load Babel -->
+    <!-- v6 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Link a css styling sheet) -->
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <div><h2 id="title" style="color: white">Data Visualization in Choropleth: USA Educational Attainment</h2></div>
+    <div id="description" style="color: white">Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014)</div>
+    
+    <script type="text/babel" defer src="./ChoroplethMap.js"></script>
+    <script type="text/babel" defer src="./index.js"></script>
+    <!-- FCC CDN link to run the tests -->
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  </body>
+</html>
